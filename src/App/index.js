@@ -50,26 +50,37 @@ function App() {
     <TodoList 
       error={error}
       loading={loading}
+      totalTodos={totalTodos}
       searchedTodos={searchedTodos}
+      searchText={searchValue}
       onError={() => <TodosError />}
       onLoading={() => <TodosLoading />}
       onEmptyTodos={() => <EmptyTodos />}
-      render={todo => (
-        <TodoItem
+      onEmptySearchResults={(searchText) => <p> No hay resultados para {searchText}</p>}
+      
+      // render={todo => (
+      //   <TodoItem
+      //       key={todo.text}
+      //       text={todo.text}
+      //       completed={todo.completed}
+      //       onComplete={() => completeTodo(todo.text)}
+      //       onDelete={() => deleteTodo(todo.text)}
+      //     />
+      // )}
+    > 
+      {todo => (
+          <TodoItem
             key={todo.text}
             text={todo.text}
             completed={todo.completed}
             onComplete={() => completeTodo(todo.text)}
             onDelete={() => deleteTodo(todo.text)}
           />
-      )}
-    />
+        )}
+      </TodoList>
 
       
       
-      <CreateTodoButton 
-        setOpenModal={setOpenModal}
-      />
 
       {openModal && (
         <Modal>
@@ -79,6 +90,10 @@ function App() {
           />
         </Modal>
       )}
+
+      <CreateTodoButton 
+        setOpenModal={setOpenModal}
+      />
     </React.Fragment>
   );
 }
