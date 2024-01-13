@@ -35,7 +35,7 @@ function App() {
     <React.Fragment>
 
     
-    <TodoHeader>
+    <TodoHeader loading={loading}>
       <TodoCounter 
                 totalTodos={totalTodos}
                 completedTodos={completedTodos}

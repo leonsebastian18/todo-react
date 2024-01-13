@@ -3,7 +3,7 @@ import './TodoSearch.css'
 
 
 function TodoSearch({searchValue, 
-  setSearchValue}) {
+  setSearchValue, loading}) {
   
   const onSearchValueChange = (event) => {
     console.log(event.target.value);
@@ -18,6 +18,7 @@ function TodoSearch({searchValue,
          className="TodoSearch"
          value={searchValue}
          onChange={onSearchValueChange}
+         disabled={loading}
       />
     );
   }
