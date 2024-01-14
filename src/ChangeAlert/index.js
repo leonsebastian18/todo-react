@@ -1,15 +1,24 @@
 import React from "react";
-import { withStorageListener } from "./withStorageListener";
+import { useStorageListener } from "./useStorageListener";
+import "./ChangeAlert.css";
 
-function ChangeAlert({ show, toggleShow}) {
+function ChangeAlert({ sincronize }) {
+
+    const  { show, toggleShow } = useStorageListener(sincronize);
+
     if (show) {
         return (
-            <div>
-                <p> hubo cambios?</p>
-                <button
-                    onClick={() => toggleShow(false)}
-                > 
-                    Volver a cargar la información</button>
+            <div className="ChangeAlert-bg">
+                <div className="ChangeAlert-container">
+
+                    <p> It looks like you changed your TODOs in another browser tab or window.</p>
+                    <p>Do you want to sync your TODOs?</p>
+                    <button
+                        className="TodoForm-button TodoForm-button--add"
+                        onClick={() => toggleShow(false)}
+                    > 
+                        Yes!</button>
+                </div>
             </div>
         );
             
@@ -19,6 +28,6 @@ function ChangeAlert({ show, toggleShow}) {
     
 }
 
-const ChangeAlertWithStorageListener = withStorageListener(ChangeAlert);
 
-export { ChangeAlertWithStorageListener };
+
+export { ChangeAlert };
