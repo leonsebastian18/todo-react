@@ -1,76 +1,67 @@
 import React from 'react';
 import { useTodos } from './useTodos';
-import { TodoHeader } from '../TodoHeader'
-import { TodoCounter } from "../TodoCounter";
-import { TodoSearch } from "../TodoSearch";
+import { TodoHeader } from '../TodoHeader';
+import { TodoCounter } from '../TodoCounter';
+import { TodoSearch } from '../TodoSearch';
 import { TodoList } from '../TodoList';
 import { TodoItem } from '../TodoItem';
-import { TodosLoading } from '../TodosLoading';
 import { TodosError } from '../TodosError';
+import { TodosLoading } from '../TodosLoading';
 import { EmptyTodos } from '../EmptyTodos';
-import { CreateTodoButton } from '../CreateTodoButton';
 import { TodoForm } from '../TodoForm';
+import { CreateTodoButton } from '../CreateTodoButton';
 import { Modal } from '../Modal';
 import { ChangeAlert } from '../ChangeAlert';
 
-
-
 function App() {
+  const { state, stateUpdaters } = useTodos();
+
   const {
-    loading,
     error,
+    loading,
     searchedTodos,
+    totalTodos,
+    completedTodos,
+    openModal,
+    searchValue,
+  } = state;
+  
+  const {
+    setOpenModal,
+    addTodo,
     completeTodo,
     deleteTodo,
-    openModal,
-    setOpenModal,
-    completedTodos,
-    totalTodos,
-    searchValue, 
     setSearchValue,
-    addTodo,
     sincronizeTodos,
-  } = useTodos();
+  } = stateUpdaters;
   
-
   return (
     <React.Fragment>
+      <TodoHeader loading={loading}>
+        <TodoCounter
+          totalTodos={totalTodos}
+          completedTodos={completedTodos}
+        />
+        <TodoSearch
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+        />
+      </TodoHeader>
 
-    
-    <TodoHeader loading={loading}>
-      <TodoCounter 
-                totalTodos={totalTodos}
-                completedTodos={completedTodos}
-      />
-
-      <TodoSearch
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
-      />
-    </TodoHeader>
-
-    <TodoList 
-      error={error}
-      loading={loading}
-      totalTodos={totalTodos}
-      searchedTodos={searchedTodos}
-      searchText={searchValue}
-      onError={() => <TodosError />}
-      onLoading={() => <TodosLoading />}
-      onEmptyTodos={() => <EmptyTodos />}
-      onEmptySearchResults={(searchText) => <p> No hay resultados para {searchText}</p>}
-      
-      // render={todo => (
-      //   <TodoItem
-      //       key={todo.text}
-      //       text={todo.text}
-      //       completed={todo.completed}
-      //       onComplete={() => completeTodo(todo.text)}
-      //       onDelete={() => deleteTodo(todo.text)}
-      //     />
-      // )}
-    > 
-      {todo => (
+      <TodoList
+        error={error}
+        loading={loading}
+        totalTodos={totalTodos}
+        searchedTodos={searchedTodos}
+        searchText={searchValue}
+        onError={() => <TodosError />}
+        onLoading={() => <TodosLoading />}
+        onEmptyTodos={() => <EmptyTodos />}
+        onEmptySearchResults={
+          (searchText) => <p>No hay resultados para {searchText}</p>
+        }
+      >
+        {todo => (
           <TodoItem
             key={todo.text}
             text={todo.text}
@@ -81,19 +72,16 @@ function App() {
         )}
       </TodoList>
 
-      
-      
-
-      {openModal && (
+      {!!openModal && (
         <Modal>
-          <TodoForm 
+          <TodoForm
             addTodo={addTodo}
             setOpenModal={setOpenModal}
           />
         </Modal>
       )}
 
-      <CreateTodoButton 
+      <CreateTodoButton
         setOpenModal={setOpenModal}
       />
 
@@ -103,6 +91,5 @@ function App() {
     </React.Fragment>
   );
 }
-
 
 export default App;

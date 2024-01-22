@@ -3,6 +3,7 @@ import React from "react";
 function useLocalStorage (itemName, initialValue) {
 
   const [state, dispatch] = React.useReducer(reducer, initialState ({ initialValue }));
+  
   const {
     sincronizedItem,
     error,
@@ -50,8 +51,7 @@ function useLocalStorage (itemName, initialValue) {
           onSuccess(parsedItem)
         } catch(error) {
           onError(error);
-          // setLoading(false);
-          // setError(true);
+          
         }
       }, 2000);
     }, [sincronizedItem]);
@@ -131,12 +131,3 @@ function useLocalStorage (itemName, initialValue) {
 
   export { useLocalStorage};
 
-  // const defaultTodos = [
-//   {text: 'Cortar cebolla', completed: true},
-//   {text: 'Tomar el curso de intro a react.js', completed: false},
-//   {text: 'llorar con la llorona', completed: false},
-//   {text: 'lalalal', completed: false},
-// ];
-
-// localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos));
-// localStorage.removeItem('TODOS_V1');
