@@ -20,6 +20,12 @@
     top:-24px;
     right:0
 }
+
+.Icon-container-edit {
+    position: absolute;
+    top: -24px;
+    right: 48px;
+}
 .Icon-container-delete:hover{
     color:red
 }
@@ -30,6 +36,10 @@
 .Icon-container-check:hover .Icon-svg{
     fill:green
 }
+.Icon-container-edit:hover .Icon-svg{
+    fill: #61DAFA;
+}
 .Icon-container-delete:hover .Icon-svg{
     fill:red
 }
+
